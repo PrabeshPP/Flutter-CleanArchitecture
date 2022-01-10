@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_declarations
+import 'package:dartz/dartz.dart';
 import 'package:mockito/mockito.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tdd/features/number_trivia/domain/repositories/number_trivia_repository.dart';
@@ -6,17 +8,23 @@ import 'package:tdd/features/number_trivia/domain/usecases/get_concrete_number_t
 
 class MockNumberTriviaRepository extends Mock
     implements NumberTriviaRepository {
+
   void main() {
-    GetConcreteNumberTrivia usecase;
-    MockNumberTriviaRepository mockNumberTriviaRepository;
+    GetConcreteNumberTrivia? usecase;
+    MockNumberTriviaRepository? mockNumberTriviaRepository;
     setUp(() {
       mockNumberTriviaRepository = MockNumberTriviaRepository();
-      usecase = GetConcreteNumberTrivia(mockNumberTriviaRepository);
+      usecase = GetConcreteNumberTrivia(mockNumberTriviaRepository!);
+    });
+    final tNumber = 1;
+    final tNumbertrivia = NumberTrivia(text: "test", number: 1);
+    test('sholud get trivia for the number from the repository', () async {
+      when(mockNumberTriviaRepository!.getConcreteNumberTrivia(any))
+          .thenAnswer((_) async => Right(tNumbertrivia));
+      final result = await usecase!.execute(number: tNumber);
+      expect(result, Right(tNumbertrivia));
+      verify(mockNumberTriviaRepository!.getConcreteNumberTrivia(tNumber));
+      verifyNoMoreInteractions(mockNumberTriviaRepository);
     });
   }
-
-  final tNumber = 1;
-  final tNumbertrivia = const NumberTrivia(text: "test", number: 1);
-
-  test();
 }
