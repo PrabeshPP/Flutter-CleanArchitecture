@@ -1,10 +1,10 @@
 # tdd
 
-A new Flutter project.
+A flutter project based on Clean Architecture and Test Diven Development.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+This project has clean architecture which would help us to update the features in the coming days.
 
 A few resources to get you started if this is your first Flutter project:
 
