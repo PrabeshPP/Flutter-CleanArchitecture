@@ -7,6 +7,7 @@ class Mytheme {
       elevation: 0.0,
       backgroundColor: Colors.green[300],
      titleTextStyle: const TextStyle(
+       fontSize: 20.0,
        color: Colors.white
      )
     )
