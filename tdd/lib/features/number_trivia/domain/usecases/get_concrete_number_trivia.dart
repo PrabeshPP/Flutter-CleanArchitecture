@@ -4,5 +4,8 @@ class GetConcreteNumberTrivia {
   final NumberTriviaRepository repository;
 
   GetConcreteNumberTrivia(this.repository);
+}
 
+class GetRandomNumberTrivia{
+  
 }
