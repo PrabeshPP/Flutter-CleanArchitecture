@@ -21,7 +21,7 @@ void main() {
   test('sholud get trivia for the number from the repository', () async {
     when(mockNumberTriviaRepository!.getConcreteNumberTrivia(any))
         .thenAnswer((_) async => Right(tNumbertrivia));
-    final result = await usecase!.execute(number: tNumber);
+    final result = await usecase!(Params(number: tNumber));
     expect(result, Right(tNumbertrivia));
     verify(mockNumberTriviaRepository!.getConcreteNumberTrivia(tNumber));
     verifyNoMoreInteractions(mockNumberTriviaRepository);
