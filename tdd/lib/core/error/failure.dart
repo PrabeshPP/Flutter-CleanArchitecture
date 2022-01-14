@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class Failure extends Equatable {
@@ -6,5 +7,9 @@ abstract class Failure extends Equatable {
   @override
   List<Object> get props => [properties];
 }
+
+// These are some general failure
+class ServerFailure extends Failure{}
+class CacheFailure  extends Failure{}
 
 
