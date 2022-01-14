@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_declarations
 import 'package:dartz/dartz.dart';
 import 'package:mockito/mockito.dart';
+import 'package:tdd/core/error/exception.dart';
+import 'package:tdd/core/error/failure.dart';
 import 'package:tdd/core/platform/network_info.dart';
 import 'package:tdd/features/number_trivia/data/datasources/number_trivia_local_data_source.dart';
 import 'package:tdd/features/number_trivia/data/datasources/number_trivia_remote_sources.dart';
@@ -40,7 +42,7 @@ void main() {
 
     test("should check if the device is online", () async {
       when(mockNetworkInfo!.isConnected).thenAnswer((_) async => true);
-      repositoryImpl!.getConcreteNumberTrivia(tNumber);
+       repositoryImpl!.getConcreteNumberTrivia(20);
       verify(mockNetworkInfo!.isConnected);
     });
 
@@ -64,6 +66,18 @@ void main() {
         await repositoryImpl?.getConcreteNumberTrivia(tNumber);
         verify(mocktriviaremotedatasource!.getConcreteNumberTrivia(tNumber));
         verify(mockLocalDataSource!.cacheNumberTrivia(tNumberTriviaModel));
+      });
+
+      test(
+          'should return server failure when remote data source is unsuccessful',
+          () async {
+        when(mocktriviaremotedatasource?.getConcreteNumberTrivia(any))
+            .thenThrow(ServerException());
+
+        final result = await repositoryImpl?.getConcreteNumberTrivia(tNumber);
+        verify(mocktriviaremotedatasource!.getConcreteNumberTrivia(tNumber));
+        verifyZeroInteractions(mockLocalDataSource);
+        expect(result, Left(ServerFailure()));
       });
     });
 
