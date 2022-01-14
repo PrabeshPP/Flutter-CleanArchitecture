@@ -7,18 +7,24 @@ import 'package:dartz/dartz.dart';
 import 'package:tdd/features/number_trivia/domain/repositories/number_trivia_repository.dart';
 
 class NumberTriviaRepositoryImpl implements NumberTriviaRepository {
-  final NumberTriviaLocalDataSource numberTriviaLocalDataSource;
-  final NumberTriviaRemoteSources numberTriviaRemoteSources;
+  final NumberTriviaLocalDataSource localDataSource;
+  final NumberTriviaRemoteSources remoteSources;
   final NetworkInfo networkInfo;
 
   NumberTriviaRepositoryImpl(
-      {required this.numberTriviaLocalDataSource,
-      required this.numberTriviaRemoteSources,
+      {required this.localDataSource,
+      required this.remoteSources,
       required this.networkInfo});
 
   @override
-  Future<Either<Failure, NumberTrivia>>? getConcreteNumberTrivia(int? number) {}
+  Future<Either<Failure?, NumberTrivia?>> getConcreteNumberTrivia(
+      int? number) async {
+    networkInfo.isConnected;
+    return Right(await remoteSources.getConcreteNumberTrivia(number));
+  }
 
   @override
-  Future<Either<Failure, NumberTrivia>>? getRandomNumberTrivia() {}
+  Future<Either<Failure?, NumberTrivia?>> getRandomNumberTrivia() async {
+    return Right(await remoteSources.getRandomNumberTrivia());
+  }
 }
