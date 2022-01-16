@@ -61,4 +61,6 @@ class NumberTriviaRepositoryImpl implements NumberTriviaRepository {
     }
     
   }
+
+
 }
