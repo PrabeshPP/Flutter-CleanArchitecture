@@ -1,24 +1,26 @@
-import 'package:flutter_test/flutter_test.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter_test/flutter_test.dart';
+
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:mockito/mockito.dart';
 import 'package:tdd/core/platform/network_info.dart';
 
-class MockConnectivityPlus extends Mock implements Connectivity {}
+class MockConnectivityChecker extends Mock implements Connectivity {}
 
 void main() {
-  MockConnectivityPlus? mockConnectivityPlus;
+  MockConnectivityChecker? mockConnectivityChecker;
   NetworkInfoImpl? networkInfoImpl;
 
   setUp(() {
-    mockConnectivityPlus = MockConnectivityPlus();
-    networkInfoImpl = NetworkInfoImpl(connectivity: mockConnectivityPlus);
+    mockConnectivityChecker = MockConnectivityChecker();
+    networkInfoImpl = NetworkInfoImpl(connectivity: mockConnectivityChecker);
   });
 
   group('isConnected', () {
     test('should forward the call to Connectivity.checkConnectivity', () async {
       // arrange
-      when(mockConnectivityPlus!.checkConnectivity())
-          .thenAnswer((_) async => );
+      // when(mockConnectivityChecker!.checkConnectivity()).thenAnswer(
+      //     (_) async => await mockConnectivityChecker!.checkConnectivity());
 
       //act
 
