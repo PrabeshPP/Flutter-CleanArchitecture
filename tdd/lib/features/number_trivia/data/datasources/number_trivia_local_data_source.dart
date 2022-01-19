@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tdd/features/number_trivia/data/models/number_trivia_model.dart';
 
@@ -11,13 +13,11 @@ class NumberTriviaLocalDataSourceImpl implements NumberTriviaLocalDataSource {
 
   NumberTriviaLocalDataSourceImpl({required this.sharedPreferences});
   @override
-  Future<void>? cacheNumberTrivia(NumberTriviaModel? numberTriviaModel) {
-  
-
-  }
+  Future<void>? cacheNumberTrivia(NumberTriviaModel? numberTriviaModel) {}
 
   @override
   Future<NumberTriviaModel>? getLastNumberTrivia() {
-
+    final jsonString = sharedPreferences.getString('CACHED_NUMBER_TRIVIA');
+    return Future.value(NumberTriviaModel.fromJson(json.decode(jsonString!)));
   }
 }
