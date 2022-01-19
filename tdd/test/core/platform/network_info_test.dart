@@ -5,22 +5,22 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:mockito/mockito.dart';
 import 'package:tdd/core/platform/network_info.dart';
 
-class MockConnectivityChecker extends Mock implements Connectivity {}
+class InternetConnectionchecker extends Mock implements InternetConnectionChecker {}
 
 void main() {
-  MockConnectivityChecker? mockConnectivityChecker;
+  InternetConnectionchecker? internetConnectionchecker;
   NetworkInfoImpl? networkInfoImpl;
 
   setUp(() {
-    mockConnectivityChecker = MockConnectivityChecker();
-    networkInfoImpl = NetworkInfoImpl(connectivity: mockConnectivityChecker);
+    internetConnectionchecker = InternetConnectionchecker();
+    networkInfoImpl = NetworkInfoImpl(internetConnectionChecker:internetConnectionchecker! );
   });
+
 
   group('isConnected', () {
     test('should forward the call to Connectivity.checkConnectivity', () async {
       // arrange
-      // when(mockConnectivityChecker!.checkConnectivity()).thenAnswer(
-      //     (_) async => await mockConnectivityChecker!.checkConnectivity());
+   
 
       //act
 
