@@ -49,9 +49,14 @@ void main() {
   group("cachedNumber Trivia", () {
     final tNumberTriviaModel = NumberTriviaModel(text: "Text", number: 1);
     test('Should call the sharedpreferences to cache the data', () async {
+       when(mocksharedpreferences!.setString(CACHED_NUMBER_TRIVIA,jsonEncode(tNumberTriviaModel.toJSon())))
+          .thenAnswer((_) async=> true);
       numberTriviaLocalDataSource!.cacheNumberTrivia(tNumberTriviaModel);
 
-   
+      //assert
+      final expectedJSON = jsonEncode(tNumberTriviaModel.toJSon());
+      verify(
+          mocksharedpreferences!.setString(CACHED_NUMBER_TRIVIA, expectedJSON));
     });
   });
 }
