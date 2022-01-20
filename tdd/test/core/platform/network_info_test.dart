@@ -16,11 +16,16 @@ void main() {
         NetworkInfoImpl(internetConnectionChecker: mockInternetChecker!);
   });
 
-  group("Internet Connnection Checker", ()  {
+  group("Internet Connnection Checker", () {
     test("Should return boolean if the Internet Connection checker is called ",
-        () async{
-          when(mockInternetChecker!.hasConnection).thenAnswer((_) async=> true);
-          final result=
-        });
+        () async {
+      //arrange
+      when(mockInternetChecker!.hasConnection).thenAnswer((_) async => true);
+      //act
+      final result = await networkInfoImpl!.isConnected;
+      //assert
+      verify(mockInternetChecker!.hasConnection);
+      expect(result, true);
+    });
   });
 }
