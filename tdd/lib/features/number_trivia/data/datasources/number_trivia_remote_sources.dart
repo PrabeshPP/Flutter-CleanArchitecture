@@ -14,7 +14,9 @@ class NumberTriviaRemoteSourcesImpl implements NumberTriviaRemoteSources {
   NumberTriviaRemoteSourcesImpl({required this.httpClient});
   @override
   Future<NumberTriviaModel>? getConcreteNumberTrivia(int? number) {
-    throw UnimplementedError();
+     String url = "numberapi.com";
+      final locationRequest = Uri.http("url/1", "/$number");
+     httpClient.get(locationRequest,headers:{"Content-Type":"application/json"});
   }
 
   @override
