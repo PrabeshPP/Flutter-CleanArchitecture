@@ -28,7 +28,7 @@ void main() {
     test("should perform a GET request on a URL with number being the endpoint",
         () async {
       String url = "numberapi.com";
-      final locationRequest = Uri.http("url/1", "/$tNumber");
+      final locationRequest = Uri.http(url, "/$tNumber");
       // arrange
       when(mockHttpClient!.get(any, headers: anyNamed('headers')))
           .thenAnswer((_) async => http.Response(reader('trivia.json'), 200));
