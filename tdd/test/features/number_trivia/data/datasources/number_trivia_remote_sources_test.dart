@@ -21,7 +21,7 @@ void main() {
         NumberTriviaRemoteSourcesImpl(httpClient: mockHttpClient!);
   });
 
-  const _baseURL = "";
+
   group("Concrete Number Trivia", () {
     final tNumber = 1;
 
