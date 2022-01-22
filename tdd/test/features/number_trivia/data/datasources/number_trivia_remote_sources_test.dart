@@ -74,4 +74,8 @@ void main() {
       expect(() => call(tNumber), throwsA(const TypeMatcher<ServerException>()));
     });
   });
+
+  group('Get Random Number Trivia', (){
+    test('should call the get method when the the getRandom number is triggered ', body)
+  });
 }
