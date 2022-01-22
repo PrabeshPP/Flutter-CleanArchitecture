@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:tdd/core/error/exception.dart';
 import 'package:tdd/features/number_trivia/data/models/number_trivia_model.dart';
@@ -29,7 +28,18 @@ class NumberTriviaRemoteSourcesImpl implements NumberTriviaRemoteSources {
   }
 
   @override
-  Future<NumberTriviaModel>? getRandomNumberTrivia() {
-    throw UnimplementedError();
+  Future<NumberTriviaModel>? getRandomNumberTrivia() async {
+    String url = "numberapi.com";
+    final locationRequest = Uri.http(url, "/random");
+    final response = await httpClient
+        .get(locationRequest, headers: {'Content-Type': '?json'});
+    if (response.statusCode == 200) {
+      var jsonData = jsonDecode(response.body);
+      NumberTriviaModel numberTriviaModel =
+          NumberTriviaModel.fromJson(jsonData);
+      return numberTriviaModel;
+    } else {
+      throw ServerException();
+    }
   }
 }
