@@ -5,7 +5,13 @@ class InputConverter {
   Either<Failure, int>? stringToInt(String number1) {
     try {
       int number = int.parse(number1);
-      return Right(number);
+      if (number<0) {
+        return Left(InvalidInputFailure());
+
+      }else{
+ return Right(number);
+      }
+     
     } on Exception {
       return Left(InvalidInputFailure());
     }
