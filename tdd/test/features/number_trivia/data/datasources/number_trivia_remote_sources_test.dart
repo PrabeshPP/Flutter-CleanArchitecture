@@ -21,6 +21,16 @@ void main() {
     numberTriviaRemoteDataSourceImpl =
         NumberTriviaRemoteSourcesImpl(httpClient: mockHttpClient!);
   });
+  void setUpMockHttpMockClientSuccess200() {
+    when(mockHttpClient!.get(any, headers: anyNamed('headers')))
+        .thenAnswer((_) async => http.Response(reader('trivia.json'), 200));
+  }
+
+  void setUpMockHttpMockClientFailure404() {
+    when(mockHttpClient!.get(any, headers: anyNamed('headers')))
+        .thenAnswer((_) async => http.Response("Something went wrong", 404));
+  }
+
   String url = "numberapi.com";
   final tNumberTriviaModel =
       NumberTriviaModel.fromJson(jsonDecode(reader("trivia.json")));
@@ -31,9 +41,7 @@ void main() {
         () async {
       final locationRequest = Uri.http(url, "/$tNumber");
       // arrange
-      when(mockHttpClient!.get(any, headers: anyNamed('headers')))
-          .thenAnswer((_) async => http.Response(reader('trivia.json'), 200));
-
+      setUpMockHttpMockClientSuccess200();
       // //act
       numberTriviaRemoteDataSourceImpl!.getConcreteNumberTrivia(tNumber);
       // //assert
@@ -47,8 +55,7 @@ void main() {
       String url = "numberapi.com";
       final locationRequest = Uri.http(url, "/$tNumber");
       // arrange
-      when(mockHttpClient!.get(any, headers: anyNamed('headers')))
-          .thenAnswer((_) async => http.Response(reader('trivia.json'), 200));
+      setUpMockHttpMockClientSuccess200();
 
       // //act
       final result = await numberTriviaRemoteDataSourceImpl!
@@ -63,8 +70,7 @@ void main() {
 
     test("should return Server Failure when the response.statusCode !=200",
         () async {
-      when(mockHttpClient!.get(any, headers: anyNamed('headers')))
-          .thenAnswer((_) async => http.Response("Something went wrong", 404));
+      setUpMockHttpMockClientFailure404();
 
       final call = numberTriviaRemoteDataSourceImpl!.getConcreteNumberTrivia;
 
@@ -80,8 +86,7 @@ void main() {
         'should call the get method when the the getRandom number is triggered ',
         () async {
       //arrange
-      when(mockHttpClient!.get(any, headers: anyNamed('headers')))
-          .thenAnswer((_) async => http.Response(reader("trivia.json"), 200));
+      setUpMockHttpMockClientSuccess200();
 
       // act
 
@@ -95,8 +100,7 @@ void main() {
     test('Should return the Number Trivia Model when the response is 200',
         () async {
       //arrange
-      when(mockHttpClient!.get(any, headers: anyNamed('headers')))
-          .thenAnswer((_) async => http.Response(reader('trivia.json'), 200));
+      setUpMockHttpMockClientSuccess200();
       //act
       final numbertriviamodel =
           await numberTriviaRemoteDataSourceImpl!.getRandomNumberTrivia();
@@ -111,12 +115,11 @@ void main() {
     test("Should thow server exception when the statusCode is not equal to 200",
         () async {
       //arrange
-      when(mockHttpClient!.get(any,headers: anyNamed('headers'))).thenAnswer(
-          (realInvocation) async => http.Response("Something went Wrong", 404));
+      setUpMockHttpMockClientFailure404();
 //act
       final call = numberTriviaRemoteDataSourceImpl!.getRandomNumberTrivia;
 //assert
-      expect(() => call(),throwsA( const TypeMatcher<ServerException>()) );
+      expect(() => call(), throwsA(const TypeMatcher<ServerException>()));
     });
   });
 }
