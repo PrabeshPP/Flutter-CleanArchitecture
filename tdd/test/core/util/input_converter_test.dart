@@ -12,12 +12,12 @@ void main() {
   });
   String tNumberString = "5";
 
-  test("Should convert the given String number to integer ", () async {
+  test("Should convert the given String number to integer ", () {
     // arrange
-    when(mockInputConverter!.coverToInt()).thenReturn(5);
+   
     // act
-    final tNumberInteger = InputConverter(strNum: tNumberString).coverToInt()!;
+   
     // verify
-    expect(tNumberInteger, 5);
+  
   });
 }

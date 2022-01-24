@@ -1,10 +1,9 @@
+import 'package:dartz/dartz.dart';
+import 'package:tdd/core/error/failure.dart';
+
 class InputConverter {
-  final String? strNum;
-
-  InputConverter({this.strNum});
-
-  int? coverToInt() {
-    int number = int.parse(strNum!);
-    return number;
+  Either<Failure, int> StringtoInt(String number1) {
+    int number = int.parse(number1);
+    return Right(number);
   }
 }
