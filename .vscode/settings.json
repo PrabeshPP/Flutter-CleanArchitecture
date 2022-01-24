@@ -1,4 +1,4 @@
 {
-    "bloc.newBlocTemplate.type": "equatable",
-    "bloc.newCubitTemplate.type": "equatable"
+    "bloc.newCubitTemplate.type": "equatable",
+    "bloc.newBlocTemplate.type": "equatable"
 }
