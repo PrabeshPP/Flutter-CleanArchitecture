@@ -21,7 +21,9 @@ class NumberTriviaRemoteSourcesImpl implements NumberTriviaRemoteSources {
         .get(locationRequest, headers: {"Content-Type": "application/json"});
     if (response.statusCode == 200) {
       var jsonData = jsonDecode(response.body);
-      return NumberTriviaModel.fromJson(jsonData);
+      NumberTriviaModel numberTriviaModel =
+          NumberTriviaModel.fromJson(jsonData);
+      return numberTriviaModel;
     } else {
       throw ServerException();
     }

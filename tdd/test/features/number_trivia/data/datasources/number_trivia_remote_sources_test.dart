@@ -30,12 +30,12 @@ void main() {
     when(mockHttpClient!.get(any, headers: anyNamed('headers')))
         .thenAnswer((_) async => http.Response("Something went wrong", 404));
   }
-
+  final tNumber = 1;
   String url = "numberapi.com";
   final tNumberTriviaModel =
       NumberTriviaModel.fromJson(jsonDecode(reader("trivia.json")));
   group("Concrete Number Trivia", () {
-    final tNumber = 1;
+    
 
     test("should perform a GET request on a URL with number being the endpoint",
         () async {
@@ -76,8 +76,7 @@ void main() {
 
       //assert
 
-      expect(
-          () => call(tNumber), throwsA(const TypeMatcher<ServerException>()));
+      expect(() => call(tNumber), throwsA(const TypeMatcher<ServerException>()));
     });
   });
 
