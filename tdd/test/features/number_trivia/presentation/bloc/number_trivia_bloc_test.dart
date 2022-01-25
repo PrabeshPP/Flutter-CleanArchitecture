@@ -3,6 +3,7 @@ import 'package:mockito/mockito.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tdd/core/error/failure.dart';
+import 'package:tdd/core/usecases/usecase.dart';
 import 'package:tdd/core/util/input_converter.dart';
 import 'package:tdd/features/number_trivia/domain/entities/number_trivia.dart';
 import 'package:tdd/features/number_trivia/domain/usecases/get_concrete_number_trivia.dart';
@@ -30,12 +31,11 @@ void main() {
   test('bloc initialstate should be empty', () {
     expect(bloc1!.state, equals(Empty()));
   });
-
+  const tNumberTrivia = NumberTrivia(text: "Test Text", number: 1);
   group('GetTriviaForConcreteNumber', () {
     const tInvalidStringNumber = 'abc';
     const tStringNumber = "1";
     const tNumber = 1;
-    const tNumberTrivia = NumberTrivia(text: "Test Text", number: 1);
 
     test(
         'Should Call the InputConverter to validate and convert the string to an unsigned integer',
@@ -106,6 +106,29 @@ void main() {
   });
 
   group("GetRandomNumberTrivia", () {
-    test("Should call the ", body)
+    test("Should get the data from the usecases", () async {
+      when(mockRandomNumberTrivia!(NoParams()))
+          .thenAnswer((realInvocation) async => const Right(tNumberTrivia));
+      bloc1!.add(GetTriviaForRandomNumber());
+      await untilCalled(mockRandomNumberTrivia!(any));
+      verify(mockRandomNumberTrivia!(NoParams()));
+    });
+
+    test("Should emit Loaded when the data is gotten successfully", () async {
+      when(mockRandomNumberTrivia!(any))
+          .thenAnswer((_) async => const Right(tNumberTrivia));
+      bloc1!.add(GetTriviaForRandomNumber());
+      await untilCalled(mockRandomNumberTrivia!(any));
+      await mockRandomNumberTrivia!(NoParams());
+      expect(bloc1!.state, equals(const Loaded(numberTrivia: tNumberTrivia)));
+    });
+    test("Should emit error when getting data fails", () async {
+      when(mockRandomNumberTrivia!(any))
+          .thenAnswer((_) async => Left(ServerFailure()));
+      bloc1!.add(GetTriviaForRandomNumber());
+      await untilCalled(mockRandomNumberTrivia!(any));
+      await mockRandomNumberTrivia!(NoParams());
+      expect(bloc1!.state, equals(const Error(Server_Failure_Message)));
+    });
   });
 }
