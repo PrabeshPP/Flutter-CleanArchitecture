@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:tdd/core/error/failure.dart';
 import 'package:tdd/core/util/input_converter.dart';
 import 'package:tdd/features/number_trivia/domain/entities/number_trivia.dart';
 import 'package:tdd/features/number_trivia/domain/usecases/get_concrete_number_trivia.dart';
@@ -33,9 +32,12 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
       GetTriviaForConcreteNumber event, Emitter<NumberTriviaState> emit) async {
     final inputEither = _inputConverter.stringToInt(event.numberString);
     inputEither!.fold((failure) => emit(const Error(InvalidIn_Failure_Message)),
-        (number) {
-     final failureorTrivia =_getConcreteNumberTrivia(Params(number: number));
-      // emit(const Loaded(numberTrivia: NumberTrivia(text: "Hello", number: 1)));
+        (number) async {
+      final failureorTrivia =
+          await _getConcreteNumberTrivia(Params(number: number));
+
+      failureorTrivia!.fold((failure) => emit(const Error(Cache_Failure_Message)),
+          (numbertTrivia) => emit(Loaded(numberTrivia: numbertTrivia!)));
     });
   }
 }

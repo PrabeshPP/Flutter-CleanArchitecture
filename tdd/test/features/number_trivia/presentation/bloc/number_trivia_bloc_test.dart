@@ -70,14 +70,15 @@ void main() {
       verify(mockGetConcreteNumberTrivia!(const Params(number: tNumber)));
     });
 
-    test("Should emit Loaded when the data is gotten successfully", () async{
-       when(mockInputConverter!.stringToInt(tStringNumber))
+    test("Should emit Loaded when the data is gotten successfully", () async {
+      when(mockInputConverter!.stringToInt(tStringNumber))
           .thenReturn(const Right(tNumber));
-        when(mockGetConcreteNumberTrivia!(const Params(number: 1)))
+      when(mockGetConcreteNumberTrivia!(const Params(number: 1)))
           .thenAnswer((_) async => const Right(tNumberTrivia));
-        bloc1!.add(const GetTriviaForConcreteNumber(tStringNumber));
-        await untilCalled(mockInputConverter!.stringToInt('1'));
+      bloc1!.add(const GetTriviaForConcreteNumber(tStringNumber));
 
+      await untilCalled(mockInputConverter!.stringToInt('1'));
+      print(bloc1!.state);
     });
   });
 }
