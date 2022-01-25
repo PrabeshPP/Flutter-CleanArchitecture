@@ -29,6 +29,7 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
         super(Empty()) {
     // on<NumberTriviaEvent>((event, emit) {});
     on<GetTriviaForConcreteNumber>(_onGetTriviaConcreteNumber);
+    on<GetTriviaForRandomNumber>(_onGetTriviaRandomNumber);
   }
 
   void _onGetTriviaConcreteNumber(
@@ -43,6 +44,11 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
       failureorTrivia!.fold((l) => emit(Error(_mapFailureToMessage(l))),
           (r) => emit(Loaded(numberTrivia: r!)));
     });
+  }
+
+  void _onGetTriviaRandomNumber(GetTriviaForRandomNumber event,Emitter<NumberTriviaState>emit){
+    
+
   }
 
   String _mapFailureToMessage(Failure? failure) {

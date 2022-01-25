@@ -86,24 +86,26 @@ void main() {
       when(mockGetConcreteNumberTrivia!(const Params(number: 1)))
           .thenAnswer((_) async => Left(ServerFailure()));
       bloc1!.add(const GetTriviaForConcreteNumber(tStringNumber));
-       await untilCalled(mockInputConverter!.stringToInt('1'));
-      await mockGetConcreteNumberTrivia!(const Params(number:tNumber ));
-       expect(bloc1!.state, equals(const Error(Server_Failure_Message
-       )));
-   
+      await untilCalled(mockInputConverter!.stringToInt('1'));
+      await mockGetConcreteNumberTrivia!(const Params(number: tNumber));
+      expect(bloc1!.state, equals(const Error(Server_Failure_Message)));
     });
 
-    test("Should emit error with a proper message for the error when getting the failure", () async {
+    test(
+        "Should emit error with a proper message for the error when getting the failure",
+        () async {
       when(mockInputConverter!.stringToInt(tStringNumber))
           .thenReturn(const Right(tNumber));
       when(mockGetConcreteNumberTrivia!(const Params(number: 1)))
           .thenAnswer((_) async => Left(CacheFailure()));
       bloc1!.add(const GetTriviaForConcreteNumber(tStringNumber));
-       await untilCalled(mockInputConverter!.stringToInt('1'));
-      await mockGetConcreteNumberTrivia!(const Params(number:tNumber ));
-       expect(bloc1!.state, equals(const Error(Cache_Failure_Message
-       )));
-   
+      await untilCalled(mockInputConverter!.stringToInt('1'));
+      await mockGetConcreteNumberTrivia!(const Params(number: tNumber));
+      expect(bloc1!.state, equals(const Error(Cache_Failure_Message)));
     });
+  });
+
+  group("GetRandomNumberTrivia", () {
+    test("Should call the ", body)
   });
 }
