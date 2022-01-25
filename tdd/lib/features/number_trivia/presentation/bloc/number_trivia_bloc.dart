@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:tdd/core/util/input_converter.dart';
@@ -30,14 +32,14 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
 
   void _onGetTriviaConcreteNumber(
       GetTriviaForConcreteNumber event, Emitter<NumberTriviaState> emit) async {
-    final inputEither = _inputConverter.stringToInt(event.numberString);
+    final inputEither =_inputConverter.stringToInt(event.numberString);
     inputEither!.fold((failure) => emit(const Error(InvalidIn_Failure_Message)),
         (number) async {
           emit(Loading());
-      final failureorTrivia =
+          final failureorTrivia =
           await _getConcreteNumberTrivia(Params(number: number));
-
-      failureorTrivia!.fold((l) => emit(const Error(Cache_Failure_Message)),
+          
+        failureorTrivia!.fold((l) => emit(const Error(Cache_Failure_Message)),
           (r) => emit(Loaded(numberTrivia: r!)));
       
     });

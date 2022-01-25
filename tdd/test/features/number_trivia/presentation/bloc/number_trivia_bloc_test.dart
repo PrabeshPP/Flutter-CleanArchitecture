@@ -1,3 +1,4 @@
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -6,23 +7,27 @@ import 'package:tdd/features/number_trivia/domain/entities/number_trivia.dart';
 import 'package:tdd/features/number_trivia/domain/usecases/get_concrete_number_trivia.dart';
 import 'package:tdd/features/number_trivia/domain/usecases/get_random_number_trivia.dart';
 import 'package:tdd/features/number_trivia/presentation/bloc/number_trivia_bloc.dart';
+import 'number_trivia_bloc_test.mocks.dart';
 
-class MockGetConcreteNumberTrivia extends Mock
-    implements GetConcreteNumberTrivia {}
 
-class MockRandomNumberTrivia extends Mock implements GetRandomNumberTrivia {}
 
-class MockInputConverter extends Mock implements InputConverter {}
+// class MockGetConcreteNumberTrivia extends Mock
+//     implements GetConcreteNumberTrivia {}
 
+// class MockRandomNumberTrivia extends Mock implements GetRandomNumberTrivia {}
+
+// class MockInputConverter extends Mock implements InputConverter {}
+
+@GenerateMocks([GetConcreteNumberTrivia,GetRandomNumberTrivia,InputConverter])
 void main() {
   NumberTriviaBloc? bloc1;
   MockGetConcreteNumberTrivia? mockGetConcreteNumberTrivia;
-  MockRandomNumberTrivia? mockRandomNumberTrivia;
+  MockGetRandomNumberTrivia? mockRandomNumberTrivia;
   MockInputConverter? mockInputConverter;
 
   setUp(() {
     mockGetConcreteNumberTrivia = MockGetConcreteNumberTrivia();
-    mockRandomNumberTrivia = MockRandomNumberTrivia();
+    mockRandomNumberTrivia = MockGetRandomNumberTrivia();
     mockInputConverter = MockInputConverter();
     bloc1 = NumberTriviaBloc(
         getConcreteNumberTrivia: mockGetConcreteNumberTrivia!,
@@ -76,9 +81,9 @@ void main() {
       when(mockGetConcreteNumberTrivia!(const Params(number: 1)))
           .thenAnswer((_) async => const Right(tNumberTrivia));
       bloc1!.add(const GetTriviaForConcreteNumber(tStringNumber));
-      await untilCalled(mockInputConverter!.stringToInt('1'));
-      await untilCalled(mockInputConverter!.stringToInt('1'));
-     expect(bloc1!.state, equals(const Loaded(numberTrivia: tNumberTrivia)));
+       await untilCalled(mockInputConverter!.stringToInt('1'));
+      await mockGetConcreteNumberTrivia!(const Params(number:tNumber ));
+       expect(bloc1!.state, equals(const Loaded(numberTrivia: tNumberTrivia)));
     });
   });
 }
