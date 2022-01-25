@@ -78,6 +78,7 @@ void main() {
       bloc1!.add(const GetTriviaForConcreteNumber(tStringNumber));
       await untilCalled(mockInputConverter!.stringToInt('1'));
       print(bloc1!.state);
+      // expect(bloc1!.state, equals(const Loaded(numberTrivia: tNumberTrivia)));
     });
   });
 }
