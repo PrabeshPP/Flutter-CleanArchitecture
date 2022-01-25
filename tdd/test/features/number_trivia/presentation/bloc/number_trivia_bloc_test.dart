@@ -130,5 +130,16 @@ void main() {
       await mockRandomNumberTrivia!(NoParams());
       expect(bloc1!.state, equals(const Error(Server_Failure_Message)));
     });
+
+     test(
+        "Should emit error with a proper message for the error when getting the failure",
+        () async {
+      when(mockRandomNumberTrivia!(any))
+          .thenAnswer((_) async => Left(CacheFailure()));
+      bloc1!.add( GetTriviaForRandomNumber());
+      await untilCalled(mockRandomNumberTrivia!(any));
+      await mockRandomNumberTrivia!(NoParams());
+      expect(bloc1!.state, equals(const Error(Cache_Failure_Message)));
+    });
   });
 }
