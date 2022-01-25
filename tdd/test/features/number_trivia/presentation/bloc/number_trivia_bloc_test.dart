@@ -39,6 +39,7 @@ void main() {
     const tStringNumber = "1";
     const tNumber = 1;
     const tNumberTrivia = NumberTrivia(text: "Test Text", number: 1);
+   
     test(
         'Should Call the InputConverter to validate and convert the string to an unsigned integer',
         () async {
