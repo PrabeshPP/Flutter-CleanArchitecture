@@ -2,6 +2,7 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:tdd/core/error/failure.dart';
 import 'package:tdd/core/util/input_converter.dart';
 import 'package:tdd/features/number_trivia/domain/entities/number_trivia.dart';
 import 'package:tdd/features/number_trivia/domain/usecases/get_concrete_number_trivia.dart';
@@ -9,7 +10,7 @@ import 'package:tdd/features/number_trivia/domain/usecases/get_random_number_tri
 import 'package:tdd/features/number_trivia/presentation/bloc/number_trivia_bloc.dart';
 import 'number_trivia_bloc_test.mocks.dart';
 
-@GenerateMocks([GetConcreteNumberTrivia,GetRandomNumberTrivia,InputConverter])
+@GenerateMocks([GetConcreteNumberTrivia, GetRandomNumberTrivia, InputConverter])
 void main() {
   NumberTriviaBloc? bloc1;
   MockGetConcreteNumberTrivia? mockGetConcreteNumberTrivia;
@@ -74,20 +75,35 @@ void main() {
       when(mockGetConcreteNumberTrivia!(const Params(number: 1)))
           .thenAnswer((_) async => const Right(tNumberTrivia));
       bloc1!.add(const GetTriviaForConcreteNumber(tStringNumber));
-       await untilCalled(mockInputConverter!.stringToInt('1'));
-      await mockGetConcreteNumberTrivia!(const Params(number:tNumber ));
-       expect(bloc1!.state, equals(const Loaded(numberTrivia: tNumberTrivia)));
+      await untilCalled(mockInputConverter!.stringToInt('1'));
+      await mockGetConcreteNumberTrivia!(const Params(number: tNumber));
+      expect(bloc1!.state, equals(const Loaded(numberTrivia: tNumberTrivia)));
     });
 
-     test("Should emit Loaded when the data is gotten successfully", () async {
+    test("Should emit error when getting data fails", () async {
       when(mockInputConverter!.stringToInt(tStringNumber))
           .thenReturn(const Right(tNumber));
       when(mockGetConcreteNumberTrivia!(const Params(number: 1)))
-          .thenAnswer((_) async => const Right(tNumberTrivia));
+          .thenAnswer((_) async => Left(ServerFailure()));
       bloc1!.add(const GetTriviaForConcreteNumber(tStringNumber));
        await untilCalled(mockInputConverter!.stringToInt('1'));
       await mockGetConcreteNumberTrivia!(const Params(number:tNumber ));
-       expect(bloc1!.state, equals(const Loaded(numberTrivia: tNumberTrivia)));
+       expect(bloc1!.state, equals(const Error(Server_Failure_Message
+       )));
+   
+    });
+
+    test("Should emit error with a proper message for the error when getting the failure", () async {
+      when(mockInputConverter!.stringToInt(tStringNumber))
+          .thenReturn(const Right(tNumber));
+      when(mockGetConcreteNumberTrivia!(const Params(number: 1)))
+          .thenAnswer((_) async => Left(CacheFailure()));
+      bloc1!.add(const GetTriviaForConcreteNumber(tStringNumber));
+       await untilCalled(mockInputConverter!.stringToInt('1'));
+      await mockGetConcreteNumberTrivia!(const Params(number:tNumber ));
+       expect(bloc1!.state, equals(const Error(Cache_Failure_Message
+       )));
+   
     });
   });
 }
