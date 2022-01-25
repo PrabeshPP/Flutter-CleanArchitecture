@@ -33,6 +33,9 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
       GetTriviaForConcreteNumber event, Emitter<NumberTriviaState> emit) async {
     final inputEither = _inputConverter.stringToInt(event.numberString);
     inputEither!.fold((failure) => emit(const Error(InvalidIn_Failure_Message)),
-        (number) => emit(const Loaded(numberTrivia:NumberTrivia(text: "Hello", number: 1))));
+        (number) {
+      _getConcreteNumberTrivia(Params(number: number));
+      // emit(const Loaded(numberTrivia: NumberTrivia(text: "Hello", number: 1)));
+    });
   }
 }

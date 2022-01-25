@@ -59,6 +59,14 @@ void main() {
     });
 
     test("should get data from the concrete use case", () async {
+      when(mockInputConverter!.stringToInt(tStringNumber))
+          .thenReturn(const Right(tNumber));
+      when(mockGetConcreteNumberTrivia!(const Params(number: 1)))
+          .thenAnswer((_) async => const Right(tNumberTrivia));
+
+      bloc1!.add(const GetTriviaForConcreteNumber(tStringNumber));
+      await untilCalled(mockInputConverter!.stringToInt('1'));
+      verify(mockGetConcreteNumberTrivia!(const Params(number: tNumber)));
       
     });
   });
