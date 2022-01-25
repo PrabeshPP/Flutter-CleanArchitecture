@@ -25,7 +25,7 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
         _getRandomNumberTrivia = getRandomNumberTrivia,
         _inputConverter = inputConverter,
         super(Empty()) {
-    on<NumberTriviaEvent>((event, emit) {});
+    // on<NumberTriviaEvent>((event, emit) {});
     on<GetTriviaForConcreteNumber>(_onGetTriviaConcreteNumber);
   }
 

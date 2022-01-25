@@ -55,8 +55,11 @@ void main() {
 
       bloc1!.add(const GetTriviaForConcreteNumber(tInvalidStringNumber));
       await untilCalled(mockInputConverter!.stringToInt('abc'));
-      expect(bloc1!.state, equals(const Error(InvalidIn_Failure_Message
-      )));
+      expect(bloc1!.state, equals(const Error(InvalidIn_Failure_Message)));
+    });
+
+    test("should get data from the concrete use case", () async {
+      
     });
   });
 }
