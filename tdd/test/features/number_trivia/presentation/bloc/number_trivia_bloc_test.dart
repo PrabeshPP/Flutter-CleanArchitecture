@@ -39,7 +39,7 @@ void main() {
     const tStringNumber = "1";
     const tNumber = 1;
     const tNumberTrivia = NumberTrivia(text: "Test Text", number: 1);
-   
+
     test(
         'Should Call the InputConverter to validate and convert the string to an unsigned integer',
         () async {
@@ -68,7 +68,16 @@ void main() {
       bloc1!.add(const GetTriviaForConcreteNumber(tStringNumber));
       await untilCalled(mockInputConverter!.stringToInt('1'));
       verify(mockGetConcreteNumberTrivia!(const Params(number: tNumber)));
-      
+    });
+
+    test("Should emit Loaded when the data is gotten successfully", () async{
+       when(mockInputConverter!.stringToInt(tStringNumber))
+          .thenReturn(const Right(tNumber));
+        when(mockGetConcreteNumberTrivia!(const Params(number: 1)))
+          .thenAnswer((_) async => const Right(tNumberTrivia));
+        bloc1!.add(const GetTriviaForConcreteNumber(tStringNumber));
+        await untilCalled(mockInputConverter!.stringToInt('1'));
+
     });
   });
 }
