@@ -76,7 +76,6 @@ void main() {
       when(mockGetConcreteNumberTrivia!(const Params(number: 1)))
           .thenAnswer((_) async => const Right(tNumberTrivia));
       bloc1!.add(const GetTriviaForConcreteNumber(tStringNumber));
-
       await untilCalled(mockInputConverter!.stringToInt('1'));
       print(bloc1!.state);
     });
