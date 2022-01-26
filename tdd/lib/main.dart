@@ -3,7 +3,8 @@ import 'package:tdd/features/number_trivia/presentation/pages/app_view.dart';
 import 'package:tdd/features/number_trivia/presentation/widgets/theme.dart';
 import 'package:tdd/injection_container.dart' as di;
 
-void main() async{
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await di.init();
   runApp(const MyApp());
 }
