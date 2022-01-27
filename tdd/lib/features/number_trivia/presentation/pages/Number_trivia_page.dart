@@ -8,6 +8,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title:const Text("Number trivia"),
+      
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tdd/features/number_trivia/presentation/pages/app_view.dart';
+import 'package:tdd/features/number_trivia/presentation/pages/Number_trivia_page.dart';
 import 'package:tdd/features/number_trivia/presentation/widgets/theme.dart';
 import 'package:tdd/injection_container.dart' as di;
 

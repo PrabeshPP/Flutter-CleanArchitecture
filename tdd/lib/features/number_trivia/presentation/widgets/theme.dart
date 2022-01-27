@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class Mytheme {
+ 
   static lightTheme(BuildContext context) => ThemeData(
       primarySwatch: Colors.lightGreen,
       appBarTheme: AppBarTheme(
           systemOverlayStyle: const SystemUiOverlayStyle(
-            statusBarColor: Colors.transparent,
+            statusBarColor:Colors.transparent,
             statusBarIconBrightness: Brightness.light,
           ),
           elevation: 0.0,
@@ -14,7 +15,6 @@ class Mytheme {
           titleTextStyle:
               const TextStyle(fontSize: 20.0, color: Colors.white)));
 
-  static darkTheme(BuildContext context) => ThemeData(
-    
-  );
+  static darkTheme(BuildContext context) => ThemeData();
 }
+
