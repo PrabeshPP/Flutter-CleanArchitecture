@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tdd/features/number_trivia/domain/entities/number_trivia.dart';
 import 'package:tdd/features/number_trivia/presentation/bloc/number_trivia_bloc.dart';
+import 'package:tdd/features/number_trivia/presentation/widgets/dispaly_message.dart';
+import 'package:tdd/features/number_trivia/presentation/widgets/loading_widget.dart';
+import 'package:tdd/features/number_trivia/presentation/widgets/trivia_display.dart';
 import 'package:tdd/injection_container.dart';
 
 class HomePage extends StatelessWidget {
