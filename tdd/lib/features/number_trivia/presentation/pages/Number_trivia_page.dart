@@ -1,4 +1,4 @@
-// ignore_for_file: sized_box_for_whitespace
+// ignore_for_file: sized_box_for_whitespace, prefer_const_constructors
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,7 +30,6 @@ class HomePage extends StatelessWidget {
                 padding: const EdgeInsets.all(12.0),
                 child: BlocBuilder<NumberTriviaBloc, NumberTriviaState>(
                     builder: (context, state) {
-                 
                   if (state is Empty) {
                     return const DispalyMessage(message: "Start Searching!");
                   } else if (state is Loading) {
@@ -43,26 +42,7 @@ class HomePage extends StatelessWidget {
                     return const Text("Hello");
                   }
                 })),
-            Padding(
-              padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-              child: TextFormField(
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                    hintText: "Enter a Number",
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(12.0)))),
-              ),
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                ElevatedButton(
-                    onPressed: () {}, child: const Text("Number Trivia")),
-                ElevatedButton(
-                    onPressed: () {}, child: const Text("Random Trivia"))
-              ],
-            )
+            const NumberTriviaControlState()
           ],
         ),
       ),
@@ -70,8 +50,64 @@ class HomePage extends StatelessWidget {
   }
 }
 
+class NumberTriviaControlState extends StatefulWidget {
+  const NumberTriviaControlState({Key? key}) : super(key: key);
 
+  @override
+  _NumberTriviaControlStateState createState() =>
+      _NumberTriviaControlStateState();
+}
 
+class _NumberTriviaControlStateState extends State<NumberTriviaControlState> {
+  String? number;
+  TextEditingController controller = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+          child: TextFormField(onFieldSubmitted: (_) =>dispatchConcrete() ,
+            controller: controller,
+            onChanged: (value) {
+              setState(() {
+                number = value;
+              });
+            },
+            keyboardType: TextInputType.number,
+            decoration: const InputDecoration(
+                hintText: "Enter a Number",
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(12.0)))),
+          ),
+        ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            ElevatedButton(
+                onPressed: () {
+                  dispatchConcrete();
+                },
+                child: const Text("Number Trivia")),
+            ElevatedButton(
+                onPressed: () {
+                  dispatchRandom();
+                },
+                child: const Text("Random Trivia"))
+          ],
+        )
+      ],
+    );
+  }
 
+  void dispatchConcrete() {
+    controller.clear();
+    BlocProvider.of<NumberTriviaBloc>(context)
+        .add(GetTriviaForConcreteNumber(number!));
+  }
 
-
+  void dispatchRandom() {
+    BlocProvider.of<NumberTriviaBloc>(context).add(GetTriviaForRandomNumber());
+  }
+}

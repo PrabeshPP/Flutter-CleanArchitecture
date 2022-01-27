@@ -34,7 +34,7 @@ class NumberTriviaRemoteSourcesImpl implements NumberTriviaRemoteSources {
     String url = "numberapi.com";
     final locationRequest = Uri.http(url, "/random");
     final response = await httpClient
-        .get(locationRequest, headers: {'Content-Type': '?json'});
+        .get(locationRequest, headers: {'Content-Type': 'application/json'});
     if (response.statusCode == 200) {
       var jsonData = jsonDecode(response.body);
       NumberTriviaModel numberTriviaModel =
