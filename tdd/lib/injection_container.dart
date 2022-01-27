@@ -33,16 +33,17 @@ Future<void> init() async{
           networkInfo: getit()));
 
   //Data Sources
+   //Remote Data Source
+
+  getit.registerLazySingleton<NumberTriviaRemoteSources>(
+      () => NumberTriviaRemoteSourcesImpl(httpClient: getit()));
 
   //Local Data Source
   getit.registerLazySingleton<NumberTriviaLocalDataSource>(
       () => NumberTriviaLocalDataSourceImpl(sharedPreferences: getit()));
   
 
-  //Remote Data Source
-
-  getit.registerLazySingleton<NumberTriviaRemoteSources>(
-      () => NumberTriviaRemoteSourcesImpl(httpClient: getit()));
+ 
   
 
   
@@ -58,7 +59,7 @@ Future<void> init() async{
   //! External
   final sharedPreferences=await SharedPreferences.getInstance();
   getit.registerLazySingleton(() =>sharedPreferences );
-  getit.registerLazySingleton(() => http.Client);
+  getit.registerLazySingleton(() => http.Client());
   getit.registerLazySingleton(() => InternetConnectionChecker());
 
 }

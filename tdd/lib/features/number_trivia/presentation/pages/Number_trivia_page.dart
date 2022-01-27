@@ -1,3 +1,5 @@
+// ignore_for_file: sized_box_for_whitespace
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tdd/features/number_trivia/presentation/bloc/number_trivia_bloc.dart';
@@ -21,12 +23,14 @@ class HomePage extends StatelessWidget {
               height: MediaQuery.of(context).size.height * 0.05,
             ),
             Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Container(
-                height: MediaQuery.of(context).size.height / 3,
-                child: const Placeholder(),
-              ),
-            ),
+                padding: const EdgeInsets.all(12.0),
+                child: BlocBuilder<NumberTriviaBloc, NumberTriviaState>(
+                    builder: (context, state) {
+                  if (state is Empty) {}
+                  return Container(
+                      height: MediaQuery.of(context).size.height / 3,
+                      child: const Text("Start Searching"));
+                })),
             Padding(
               padding: const EdgeInsets.only(left: 16.0, right: 16.0),
               child: TextFormField(
